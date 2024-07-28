@@ -16,7 +16,7 @@ def process_resume(file_path, logger):
     # запишем в логи время процессинга ответа от чатгпт
     logger.info(f"Start processing resume: {file_path}")
     start_time = time.time()
-    client = OpenAI(api_key="sk-proj-ffquTeq3H9uQvaTQa0yYT3BlbkFJX0SnyXycLnl1cP8bP1qE")
+    client = OpenAI(api_key="")
 
     result = request_chatgpt(client, prompt)
 
