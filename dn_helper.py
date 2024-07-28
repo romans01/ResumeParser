@@ -1,8 +1,11 @@
 import sqlite3
 import json
+import pandas as pd
+import openpyxl
 
 
-def create_tables_and_store_data(json_string, db_path):
+
+def create_tables_and_store_data(json_string, db_path = "data.db"):
     data = json.loads(json_string)
 
     conn = sqlite3.connect(db_path)
@@ -70,4 +73,24 @@ def create_tables_and_store_data(json_string, db_path):
 
     conn.commit()
     cur.close()
+    conn.close()
+
+
+
+
+def export_to_excel(db_path = "data.db", excel_path="result.xlsx"):
+    conn = sqlite3.connect(db_path)
+
+    # Read data from tables
+    candidates_df = pd.read_sql_query("SELECT * FROM candidates", conn)
+    skills_df = pd.read_sql_query("SELECT * FROM skills", conn)
+    #experience_df = pd.read_sql_query("SELECT * FROM experience", conn)
+
+    # Merge data into a single DataFrame
+    merged_df = candidates_df.merge(skills_df, left_on='id', right_on='candidate_id', how='left')
+    #merged_df = merged_df.merge(experience_df, left_on='candidate_id', right_on='candidate_id', how='left', suffixes=('_skill', '_experience'))
+
+    # Write to Excel
+    merged_df.to_excel(excel_path, index=False)
+
     conn.close()

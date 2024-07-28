@@ -16,7 +16,16 @@ def process_resume(file_path, logger):
     # запишем в логи время процессинга ответа от чатгпт
     logger.info(f"Start processing resume: {file_path}")
     start_time = time.time()
-    client = OpenAI(api_key="")
+    # Необходимо заменить на свой API ключ
+    # берем ключ из переменной окружения
+    key = os.environ.get('OPENAI_API_KEY')
+    if key is None:
+        logger.info("OPENAI_API_KEY is not set")
+        return ""
+    else:
+        logger.info(f"OPENAI_API_KEY is set to: {key}")
+
+    client = OpenAI(api_key=key)
 
     result = request_chatgpt(client, prompt)
 
