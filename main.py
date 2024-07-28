@@ -84,9 +84,9 @@ def start_processing(logger):
 
 def config_frames(logger):
     root = tk.Tk()
-    root.title = "Resumes Processor. Version 1.0 (beta)"
-
+    root.title("Resumes Processor. Version 1.0 (beta)")
     frame1 = tk.Frame(root)
+
     frame1.pack()
     frame2 = tk.Frame(root)
     frame2.pack()
